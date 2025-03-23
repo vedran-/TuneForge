@@ -1,7 +1,3 @@
-
-# TuneForge README
-
-```markdown
 # TuneForge
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
@@ -232,4 +228,3 @@ MIT License—free to use, modify, and share. See [LICENSE](LICENSE).
 - Thanks to the AI and open-source community for inspiration!
 
 Happy tuning with TuneForge! Questions? Open an issue or ping me on GitHub.
-```
