@@ -219,7 +219,7 @@ def generate_levels(model_key):
     output = model.generate(
         input_ids=inputs["input_ids"],
         attention_mask=inputs["attention_mask"],
-        max_new_tokens=512,
+        max_new_tokens=2048,
         temperature=0.5,
         top_p=0.9,
         repetition_penalty=1.5,
