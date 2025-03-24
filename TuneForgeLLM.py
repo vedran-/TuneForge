@@ -6,9 +6,9 @@ from transformers import TrainingArguments
 import os
 import subprocess
 
-INPUT_DATASET_NAME='swampattack2.txt'
-INPUT_DATASET_SPLITTER='-----\n'
-OUTPUT_MODEL_NAME='swamp_model'
+INPUT_DATASET_NAME = 'swampattack2.txt'
+INPUT_DATASET_SPLITTER = '-----\n'
+OUTPUT_MODEL_NAME = 'swamp_model'
 # Few-shot prompt
 PROMPT_TEMPLATE = """// SwampAttack2 level
 // Level: C01L01
@@ -183,6 +183,13 @@ def finetune_model(model_key):
     tokenizer.save_pretrained(config["finetuned_model"])
     print(f"Model saved to {config['finetuned_model']}")
 
+    # Clean up
+    del trainer
+    del model
+    del tokenizer
+    torch.cuda.empty_cache()
+    print("Memory cleared after fine-tuning.")
+
 def generate_levels(model_key):
     config = MODEL_CONFIGS[model_key]
     model_path = config["finetuned_model"] if os.path.exists(config["finetuned_model"]) else config["base_model"]
@@ -234,6 +241,14 @@ def generate_levels(model_key):
     # Save to file
     with open(f"generated_level_{model_key}.txt", "w", encoding="utf-8") as f:
         f.write(generated_text)
+
+    # Clean up
+    del model
+    del tokenizer
+    del inputs
+    del output
+    torch.cuda.empty_cache()
+    print("Memory cleared after generation.")
 
 def convert_to_gguf(model_key):
     config = MODEL_CONFIGS[model_key]
@@ -287,6 +302,12 @@ def convert_to_gguf(model_key):
         print(f"GGUF model saved to {gguf_output}")
     except subprocess.CalledProcessError as e:
         print(f"Error during GGUF conversion: {e}")
+
+    # Clean up
+    del model
+    del tokenizer
+    torch.cuda.empty_cache()
+    print("Memory cleared after GGUF conversion.")
 
 def main_menu():
     while True:
